@@ -1,55 +1,117 @@
+
 function GetComputerChoice() {
     let choice =  Math.floor(Math.random() * 3);
 
     if (choice == 1){
         choice = 'rock';
+        div.textContent = 'Computer chooses rock';
+        console.log("Comp choice is r")
         return choice;
     }
     if(choice == 2){
         choice = 'paper';
+        div.textContent = 'Computer chooses paper';
+        console.log("Comp choice is p")
         return choice;
     }
     else {
         choice = 'scissors';
+        div.textContent = 'Computer chooses scissors';
+        console.log("Comp choice is s")
         return choice;
     }
 }
 
-function Playerselection (){
-    let Player = prompt("Rock, Paper or Scissors?")
-    Player.toLowerCase();
-    return Player;
-
+function GetP(id){
+    if(id=="r"){
+        console.log("rock")
+        return "rock"
+    }
 }
 
-function Computerselection (){
+function Playerselection (){
+const buttons = document.querySelectorAll("button")
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      Computerselection(button.id);
+    });
+  })
+}
+
+function Computerselection (id){
     let Comp = GetComputerChoice()
-    return Comp;
+    let A = round(Comp, id);
+    return A;
 }
 
 function round(Comp, Player){
+    console.log(Player)
     if (Comp == Player){
+        win.textContent = 'Game tied';
         console.log("Game tied")
-        return
+        carry(0);
+        return;  
     }
     if (Player == 'rock'& Comp == 'scissors'){
+        win.textContent = 'Winner Winner Chicken Dinner';
         console.log('Winner Winner Chicken Dinner')
-        return
+        carry(1);
+        return; 
     }
     if (Player == 'paper'& Comp == 'rock'){
+        win.textContent = 'Winner Winner Chicken Dinner';
         console.log('Winner Winner Chicken Dinner')
-        return
+        carry(1);
+        return; 
     }
     if (Player == 'scissors'& Comp == 'paper'){
+        win.textContent = 'Winner Winner Chicken Dinner';
         console.log('Winner Winner Chicken Dinner')
-        return
+        carry(1);
+        return;
     }
     else{
+        win.textContent = 'You lose';
         console.log('You lose. LOLOLOLOLOLOL')
-        return
+        carry(2);
+        return;
     }
 }
 
-let A = Playerselection();
-let B = Computerselection();
-round(B,A);
+function carry(roll){
+
+    if(roll == 0 ){
+        score.textContent = 'Computer = '+initialC +' Player = ' + (initialP);
+    }
+    if (roll == 1){
+        initialP++
+        score.textContent = 'Computer = '+initialC +' Player = ' + (initialP);
+    }
+    if (roll == 2){
+        initialC++;
+        score.textContent = 'Computer = '+initialC +' Player = ' + (initialP);
+    }
+
+
+
+}
+
+
+
+const result = document.querySelector('#result')
+const div = document.createElement("div");
+div.classList.add('div')
+result.appendChild(div);
+
+let initialP = 0;
+let initialC = 0;
+const body = document.querySelector('body')
+const win = document.createElement("div");
+const score = document.createElement("div");
+score.classList.add('div')
+win.classList.add('div')
+body.appendChild(win);
+body.appendChild(score)
+
+
+let choice = Playerselection ();
